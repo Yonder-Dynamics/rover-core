@@ -7,9 +7,13 @@ Rover Core uses Redis for message routing and data storage.
 
 ## Communication
 Rover modules can communicate directly via Redis Pub/Sub channels. As part of
-protocol, modules must pulish `value` to `channel:key` when changing `key` to
+protocol, modules must pulish `value` to `updates:key` when changing `key` to
 `value`, which allows other modules to listen for updates to the key and react
 appropriately to the new value.
+
+The message a module directly, publish to the corresponding `msg:<module name>`
+channel. If a reply is desired, the name of the publisher should be included in
+the message contents. The reply will be delivered with `reply` in the contents.
 
 ## Data
 * Odometry
@@ -27,7 +31,7 @@ appropriately to the new value.
     * Network latency
     * Video feeds
 * Rover Status
-    * Connected Modules
+    * Modules Status
     * Motor information
 * Administration
     * Control Panel sessions and authorization
